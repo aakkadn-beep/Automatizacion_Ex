@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EduNex Systems · Prototipo E4</title>
+<meta name="description" content="Prototipo funcional con datos simulados del registro automatizado al examen de ubicación. Proyecto escolar SCC-1007.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="top"><div class="wrap bar">
+ <div class="brand"><svg class="logo" viewBox="0 0 40 40" aria-hidden="true"><path d="M9 31V9l22 22V9" fill="none" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/><circle cx="9" cy="31" r="4" fill="var(--ink)"/><circle cx="9" cy="9" r="4" fill="var(--ink)"/><circle cx="31" cy="31" r="4" fill="var(--ink)"/><circle cx="31" cy="9" r="4.5" fill="#E8A33D"/></svg><div>EduNex Systems<small>Prototipo E4 · Registro al examen de ubicación</small></div></div>
+ <nav aria-label="Pantallas">
+  <div class="grp"><b>Aspirante</b><button data-go="registro">Registro</button><button data-go="consulta">Consulta de estatus</button></div>
+  <div class="grp"><b>Coordinación y caja</b><button data-go="panel">Panel</button><button data-go="caja">Reporte para caja</button><button id="salir" hidden>Cerrar sesión</button></div>
+  <a class="tgl" href="tests.html" style="display:inline-flex;align-items:center;text-decoration:none">Pruebas</a>
+  <button class="tgl" id="wireBtn" aria-pressed="false">Ver como wireframe</button>
+ </nav></div></header>
+
+<main class="wrap">
+
+<section data-view="registro">
+ <div class="phone">
+  <div class="head">EduNex · Examen de ubicación <span class="sample">Datos simulados</span></div>
+  <div id="regForm">
+   <div class="steps" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
+   <h1>Regístrate al examen de ubicación</h1>
+   <div class="card" id="instr" style="margin-top:12px">
+    <h3>Cómo registrarte y pagar</h3>
+    <ol style="margin:8px 0 0;padding-left:20px;font-size:15px">
+     <li>Llena los 4 datos de abajo.</li>
+     <li>Anota tu referencia de pago y tu código de consulta.</li>
+     <li>Paga $500 en banco o en caja con esa referencia.</li>
+     <li>Consulta tu estatus cuando quieras, sin ir a la oficina.</li>
+    </ol>
+    <div class="kv" style="margin-top:10px"><span>Registro hasta</span><b id="i-cierre"></b></div>
+    <div class="kv" style="margin-top:6px"><span>Pago</span><b id="i-pago"></b></div>
+    <div class="kv" style="margin-top:6px"><span>Examen</span><b id="i-exam"></b></div>
+    <p class="hint" style="margin-top:10px"><b>Importante:</b> el pago es solo para el examen de este semestre, no es transferible y no hay fecha extraordinaria.</p>
+   </div>
+   <div class="err" id="e-general" role="alert"></div>
+   <form id="f" novalidate>
+    <div class="field"><label for="control">Número de control</label><input id="control" inputmode="numeric" autocomplete="off" placeholder="Ej. 26249001"><div class="err" id="e-control" role="alert"></div></div>
+    <div class="field"><label for="nombre">Nombre completo</label><input id="nombre" autocomplete="name" placeholder="Nombre y apellidos"><div class="err" id="e-nombre" role="alert"></div></div>
+    <div class="field"><label for="carrera">Carrera</label><select id="carrera"></select><div class="err" id="e-carrera" role="alert"></div></div>
+    <div class="field"><label for="grupo">Grupo</label><select id="grupo"></select><div class="err" id="e-grupo" role="alert"></div></div>
+    <div class="checkrow" id="asistidoRow" hidden><input type="checkbox" id="asistido"><label for="asistido">Registro asistido en la oficina (solo Coordinación)</label></div>
+    <button class="btn" type="submit">Registrarme</button>
+   </form>
+  </div>
+  <div id="regOk" hidden>
+   <div class="steps" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i></div>
+   <h1>Listo, quedaste registrado</h1>
+   <p class="note">Paga $500 con esta referencia dentro de la ventana de pago. No necesitas entregar comprobante: el pago se cruza solo.</p>
+   <div class="ref card">
+    <div class="kv"><span>Referencia de pago</span><b id="o-ref"></b></div>
+    <div class="kv"><span>Concepto</span><b id="o-con"></b></div>
+    <div class="kv"><span>Monto</span><b>$500.00</b></div>
+    <div class="kv"><span>Ventana de pago</span><b id="o-win"></b></div>
+   </div>
+   <div style="margin-top:14px"><b>Tu código de consulta</b><div class="big" id="o-code"></div><p class="hint">Guárdalo. Con tu número de control y este código ves tu estatus y tu nivel sin ir a la oficina.</p></div>
+   <button class="btn" id="copyCode" type="button">Copiar código</button>
+   <button class="btn alt" id="toConsulta" type="button">Consultar mi estatus</button>
+   <button class="btn alt" id="otro" type="button">Registrar a otra persona</button>
+  </div>
+ </div>
+</section>
+
+<section data-view="consulta" hidden>
+ <div class="phone">
+  <div class="head">EduNex · Consulta de estatus <span class="sample">Datos simulados</span></div>
+  <h1>Consulta tu estatus</h1>
+  <p class="note">Escribe tu número de control y el código que te dimos al registrarte.</p>
+  <form id="q" novalidate>
+   <div class="field"><label for="qc">Número de control</label><input id="qc" inputmode="numeric" autocomplete="off"></div>
+   <div class="field"><label for="qk">Código de consulta</label><input id="qk" autocomplete="off" autocapitalize="characters" maxlength="4"></div>
+   <div class="err" id="e-q" role="alert"></div>
+   <button class="btn" type="submit">Ver mi estatus</button>
+  </form>
+  <div id="qres" class="card" style="margin-top:16px" hidden></div>
+  <div class="demo" id="demoQ"></div>
+ </div>
+</section>
+
+<section data-view="acceso" hidden>
+ <div class="login">
+  <h1>Acceso de Coordinación y caja</h1>
+  <p class="note" id="accesoMsg">Esta parte requiere usuario y contraseña.</p>
+  <form id="lg" novalidate>
+   <div class="field"><label for="lu">Usuario</label><input id="lu" autocomplete="username" autocapitalize="none"></div>
+   <div class="field"><label for="lp">Contraseña</label><input id="lp" type="password" autocomplete="current-password"></div>
+   <div class="err" id="e-lg" role="alert"></div>
+   <button class="btn" type="submit">Entrar</button>
+  </form>
+  <div class="demo"><b>Para probar el prototipo:</b><br>Coordinación: usuario <code>coordinador</code>, contraseña <code>edunex2026</code>.<br>Caja: usuario <code>caja</code>, contraseña <code>caja2026</code>.<br>Son claves de demostración. El sistema real usaría la cuenta institucional del Tec.</div>
+ </div>
+</section>
+
+<section data-view="panel" hidden>
+ <div class="sec-h"><div><h1>Panel del Coordinador</h1><p class="note">Convocatoria enero–junio 2027. <span class="sample">Datos simulados</span> Hoy (simulado): <b id="hoyTxt"></b></p></div></div>
+ <div class="grid4" id="kpis"></div>
+ <div class="bar-lvl" id="nivelesTxt"></div>
+ <div class="cols" style="margin-top:14px">
+  <div class="stack">
+   <div class="sec-h"><h2>Aspirantes</h2><span class="note" id="cuenta"></span></div>
+   <div class="tools">
+    <div class="field"><label for="buscar">Buscar por número de control o nombre</label><input id="buscar" placeholder="Ej. 2624010"></div>
+    <div class="field"><label for="fEst">Estatus</label><select id="fEst"><option value="">Todos</option><option>Registrado</option><option>Pagado</option><option>Nivel disponible</option></select></div>
+    <div class="field"><label for="fCar">Carrera</label><select id="fCar"></select></div>
+    <div class="field"><label for="fGru">Grupo</label><select id="fGru"></select></div>
+   </div>
+   <div class="tw"><table><thead><tr><th>Control</th><th>Nombre</th><th>Carrera</th><th>Grupo</th><th>Estatus</th><th>Nivel</th></tr></thead><tbody id="tb"></tbody></table></div>
+   <div class="row"><button class="btn sm alt" id="exPag" type="button">Descargar lista del examen (pagados)</button><button class="btn sm alt" id="exNiv" type="button">Descargar lista por nivel</button></div>
+   <div class="card"><h3>Bandeja de avisos (simulada)</h3><p class="note">Lo que el sistema enviaría. Los avisos a aspirantes se muestran en pantalla; los recordatorios se mandan a la Coordinación por Teams.</p><ul class="list" id="avisos"></ul></div>
+  </div>
+  <div class="stack">
+   <div class="card"><h3>1. Fechas de la convocatoria</h3><p class="note">Se capturan una sola vez y alimentan validaciones, avisos y listas.</p>
+    <div class="two"><div class="field"><label for="d1">Cierre de registro</label><input id="d1" type="date"></div><div class="field"><label for="d2">Pago, del</label><input id="d2" type="date"></div><div class="field"><label for="d3">Pago, al</label><input id="d3" type="date"></div><div class="field"><label for="d4">Examen</label><input id="d4" type="date"></div></div>
+    <div class="field"><label for="d0">Hoy (simulado, para probar cierres)</label><input id="d0" type="date"></div>
+    <button class="btn sm" id="saveD" type="button" style="margin-top:12px">Guardar fechas</button><div id="dMsg" class="msg" role="status"></div></div>
+   <div class="card"><h3>2. Convocatoria para compartir</h3><p class="note">Texto listo para Facebook, avisos o Teams.</p>
+    <textarea id="convTxt" rows="5" readonly style="width:100%;font:15px var(--fb);padding:10px;border:1.5px solid var(--muted);border-radius:10px;background:var(--surface);color:var(--ink)" aria-label="Texto de la convocatoria"></textarea>
+    <button class="btn sm" id="copyConv" type="button" style="margin-top:10px">Copiar texto</button></div>
+   <div class="card"><h3>3. Cruce de pagos</h3><p class="note">Carga el reporte que entrega caja (CSV con referencia, monto y fecha).</p>
+    <div class="field"><label for="filePay">Archivo de pagos</label><input id="filePay" type="file" accept=".csv,text/csv"></div>
+    <div class="row" style="margin-top:10px"><button class="btn sm" id="loadPay" type="button">Cruzar archivo</button><button class="btn sm alt" id="ejPay" type="button">Usar reporte de ejemplo</button></div><div id="payMsg" class="msg" role="status"></div></div>
+   <div class="card"><h3>4. Excepciones</h3><div id="exc" class="stack" style="margin-top:8px"></div></div>
+   <div class="card"><h3>5. Resultado del examen</h3><p class="note">Carga el archivo de la plataforma externa (CSV con control y nivel). Revisas el resumen y confirmas.</p>
+    <div class="field"><label for="fileRes">Archivo de resultados</label><input id="fileRes" type="file" accept=".csv,text/csv"></div>
+    <div class="row" style="margin-top:10px"><button class="btn sm" id="prevRes" type="button">Revisar archivo</button><button class="btn sm alt" id="ejRes" type="button">Usar resultado de ejemplo</button></div>
+    <div id="resMsg" class="msg" role="status"></div><button class="btn sm" id="pubRes" type="button" style="margin-top:10px" hidden>Confirmar y publicar niveles</button></div>
+   <div class="card"><h3>6. Recordatorio de pago</h3><p class="note" id="remNote"></p>
+    <div class="row" style="margin-top:10px"><button class="btn sm" id="remind" type="button">Enviar lista a la Coordinación (simulado)</button><button class="btn sm alt" id="exRem" type="button">Descargar lista</button></div><div id="remMsg" class="msg" role="status"></div></div>
+   <div class="card"><h3>7. Datos de prueba</h3><p class="note">Todo se guarda solo en este navegador.</p>
+    <div class="row" style="margin-top:10px"><button class="btn sm alt" id="seed60" type="button">Reiniciar con 60 aspirantes</button><button class="btn sm alt" id="seed600" type="button">Reiniciar con 600 aspirantes</button><button class="btn sm alt" id="seed0" type="button">Dejar vacío</button></div>
+    <div class="row" style="margin-top:10px"><button class="btn sm alt" id="perf" type="button">Medir tiempos (RNF-07)</button></div><div id="perfMsg" class="msg" role="status"></div></div>
+  </div>
+ </div>
+</section>
+
+<section data-view="caja" hidden>
+ <div class="sec-h"><div><h1>Reporte para caja</h1><p class="note">Registrados con su estatus de pago. Coincide con la base del panel. <span class="sample">Datos simulados</span></p></div>
+  <button class="btn sm alt" id="exp" type="button">Descargar hoja de cálculo (CSV)</button></div>
+ <div class="grid4" id="kpis2"></div>
+ <div class="tw"><table><thead><tr><th>Referencia</th><th>Concepto</th><th>Control</th><th>Nombre</th><th>Monto</th><th>Estatus de pago</th></tr></thead><tbody id="tc"></tbody></table></div>
+</section>
+</main>
+<footer class="foot"><div class="wrap">EduNex Systems · Prototipo escolar de SCC-1007 con datos simulados. Los datos se guardan solo en tu navegador. <a href="README.md" id="repoLink">Documentación</a></div></footer>
+<div class="toast" id="toast" role="status"></div>
+<script src="core.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
