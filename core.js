@@ -167,7 +167,7 @@
   }
 
   /* ---------- Acceso por rol (RNF-06) ---------- */
-  const VISTAS = { registro: null, consulta: null, panel: ['coordinador'], caja: ['coordinador', 'caja'] };
+  const VISTAS = { inicio: null, ayuda: null, acceso: null, registro: null, consulta: null, panel: ['coordinador'], caja: ['coordinador', 'caja'] };
   function puedeVer(rol, vista) { const need = VISTAS[vista]; return need === null || (!!rol && need.includes(rol)); }
   function iniciarSesion(usuario, clave) { const u = USUARIOS[(usuario || '').trim().toLowerCase()]; return u && u.clave === clave ? u.rol : null; }
 

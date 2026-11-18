@@ -28,7 +28,7 @@
     if (!C.puedeVer(rol, v)) { $('#accesoMsg').textContent = 'Esta parte es solo para ' + (v === 'panel' ? 'la Coordinación' : 'la Coordinación y caja') + '. Entra con tu usuario y contraseña.'; go.next = v; v = 'acceso'; }
     $$('[data-view]').forEach(s => s.hidden = s.dataset.view !== v);
     $$('nav [data-go]').forEach(b => b.dataset.go === v ? b.setAttribute('aria-current', 'page') : b.removeAttribute('aria-current'));
-    $('#salir').hidden = !rol;
+    $('#sesion').textContent = rol ? 'Cerrar sesión' : 'Entrar';
     if (v === 'registro') drawInstr();
     if (v === 'consulta') drawDemo();
     if (v === 'panel') drawPanel();
@@ -37,7 +37,9 @@
     window.scrollTo(0, 0);
   }
   $$('[data-go]').forEach(b => b.onclick = () => go(b.dataset.go));
-  $('#salir').onclick = () => { try { sessionStorage.removeItem(SES); } catch (e) { } rol = null; toast('Sesión cerrada.'); go('registro'); };
+  $('#sesion').onclick = () => { if (rol) { try { sessionStorage.removeItem(SES); } catch (e) { } rol = null; toast('Sesión cerrada.'); go('inicio'); } else { $('#accesoMsg').textContent = 'Esta parte requiere usuario y contraseña.'; go.next = 'panel'; go('acceso'); } };
+  $$('[data-href]').forEach(b => b.onclick = () => { location.href = b.dataset.href; });
+  { const im = $('#escudo'); const fb = () => { im.hidden = true; $('#escudoTxt').hidden = false; }; im.onerror = fb; if (im.complete && im.naturalWidth === 0) fb(); }
   $('#lg').onsubmit = ev => {
     ev.preventDefault(); const r = C.iniciarSesion($('#lu').value, $('#lp').value), e = $('#e-lg');
     if (!r) { e.textContent = 'Usuario o contraseña incorrectos. Revisa los datos de prueba que aparecen abajo.'; e.classList.add('on'); return; }
@@ -158,6 +160,6 @@
   $('#exp').onclick = () => download('reporte_para_caja.csv', C.toCSV(C.COLS.caja, C.reporteCaja(S)));
 
   $('#wireBtn').onclick = () => { const on = document.documentElement.classList.toggle('wire'); $('#wireBtn').setAttribute('aria-pressed', on); $('#wireBtn').textContent = on ? 'Ver con diseño' : 'Ver como wireframe'; };
-  const h = (location.hash || '#registro').slice(1).replace(/[^a-z]/g, '');
-  go(['registro', 'consulta', 'panel', 'caja'].includes(h) ? h : 'registro');
+  const h = (location.hash || '#inicio').slice(1).replace(/[^a-z]/g, '');
+  go(['inicio', 'registro', 'consulta', 'panel', 'caja', 'ayuda'].includes(h) ? h : 'inicio');
 })();

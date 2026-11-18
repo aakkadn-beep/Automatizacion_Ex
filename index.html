@@ -9,18 +9,48 @@
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<header class="top"><div class="wrap bar">
- <div class="brand"><svg class="logo" viewBox="0 0 40 40" aria-hidden="true"><path d="M9 31V9l22 22V9" fill="none" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/><circle cx="9" cy="31" r="4" fill="var(--ink)"/><circle cx="9" cy="9" r="4" fill="var(--ink)"/><circle cx="31" cy="31" r="4" fill="var(--ink)"/><circle cx="31" cy="9" r="4.5" fill="#E8A33D"/></svg><div>EduNex Systems<small>Prototipo E4 · Registro al examen de ubicación</small></div></div>
- <nav aria-label="Pantallas">
-  <div class="grp"><b>Aspirante</b><button data-go="registro">Registro</button><button data-go="consulta">Consulta de estatus</button></div>
-  <div class="grp"><b>Coordinación y caja</b><button data-go="panel">Panel</button><button data-go="caja">Reporte para caja</button><button id="salir" hidden>Cerrar sesión</button></div>
-  <a class="tgl" href="tests.html" style="display:inline-flex;align-items:center;text-decoration:none">Pruebas</a>
-  <button class="tgl" id="wireBtn" aria-pressed="false">Ver como wireframe</button>
- </nav></div></header>
+<header class="top">
+ <div class="wrap bar">
+  <button class="brandbtn" data-go="inicio" aria-label="Ir al inicio">
+   <img id="escudo" src="assets/escudo-tec-matehuala.png" alt="Escudo del Tecnológico Nacional de México, Campus Matehuala" height="44">
+   <span id="escudoTxt" class="escudo-txt" hidden>TecNM<br>Campus Matehuala</span>
+   <span class="vsep" aria-hidden="true"></span>
+   <svg class="logo" viewBox="0 0 40 40" aria-hidden="true"><path d="M9 31V9l22 22V9" fill="none" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/><circle cx="9" cy="31" r="4" fill="var(--ink)"/><circle cx="9" cy="9" r="4" fill="var(--ink)"/><circle cx="31" cy="31" r="4" fill="var(--ink)"/><circle cx="31" cy="9" r="4.5" fill="#E8A33D"/></svg>
+   <span class="bname">EduNex Systems<small>Registro al examen de ubicación</small></span>
+  </button>
+  <div class="hdr-r"><button class="lnk" data-go="ayuda">Ayuda</button><button class="entrar" id="sesion">Entrar</button></div>
+ </div>
+ <div class="tabs"><div class="wrap"><nav aria-label="Pantallas">
+  <button data-go="inicio">Inicio</button><button data-go="registro">Registro</button><button data-go="consulta">Consulta de estatus</button><button data-go="panel">Panel</button><button data-go="caja">Reporte para caja</button>
+  <a class="tgl" href="tests.html">Pruebas</a><button class="tgl" id="wireBtn" aria-pressed="false">Ver como wireframe</button>
+ </nav></div></div>
+</header>
 
 <main class="wrap">
 
-<section data-view="registro">
+<section data-view="inicio">
+ <div class="hero"><div><p class="kick">Tecnológico Nacional de México · Campus Matehuala</p><h1 class="herot">Examen de ubicación</h1><p class="heros">Regístrate, paga y consulta tu nivel desde tu celular, sin filas ni papeles.</p></div></div>
+ <div class="wrap">
+  <h2 class="gh">Para aspirantes</h2>
+  <ul class="tiles"><li><button class="tile t-asp" data-go="registro"><span class="disc"><svg viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="12" y="8" width="24" height="32" rx="3"/><path d="M18 18h12M18 25h12M18 32h6"/></svg></span><span class="tl">Regístrate al examen</span></button></li><li><button class="tile t-asp" data-go="consulta"><span class="disc"><svg viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="21" cy="21" r="9"/><path d="M28 28l10 10"/></svg></span><span class="tl">Consulta tu estatus y nivel</span></button></li><li><button class="tile t-asp" data-go="ayuda"><span class="disc"><svg viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="15"/><path d="M19 20a5 5 0 1 1 7 4.5c-1.5.8-2 1.8-2 3.5M24 34v.5"/></svg></span><span class="tl">Cómo registrarte y pagar</span></button></li></ul>
+  <h2 class="gh">Coordinación y caja <span class="note">(requiere usuario y contraseña)</span></h2>
+  <ul class="tiles"><li><button class="tile t-sta" data-go="panel"><span class="disc"><svg viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M10 38V22M20 38V12M30 38V26M40 38V18"/></svg></span><span class="tl">Panel de la Coordinación</span></button></li><li><button class="tile t-sta" data-go="caja"><span class="disc"><svg viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="14" width="30" height="22" rx="3"/><path d="M9 22h30M16 30h6"/></svg></span><span class="tl">Reporte para caja</span></button></li><li><button class="tile t-sta" data-href="tests.html"><span class="disc"><svg viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 14l3 3 5-6M12 26l3 3 5-6M12 38l3 3 5-6M26 15h12M26 27h12M26 39h12"/></svg></span><span class="tl">Casos de prueba</span></button></li></ul>
+  <p class="note" style="margin-top:22px"><span class="sample">Datos simulados</span> Prototipo escolar. Nada de lo que escribas aquí es real.</p>
+ </div>
+</section>
+
+<section data-view="ayuda" hidden>
+ <div class="login" style="max-width:640px">
+  <h1>Ayuda</h1>
+  <div class="card" style="margin-top:14px"><h3>¿Cómo me registro?</h3><p class="note">Entra a «Regístrate al examen», llena 4 datos (número de control, nombre, carrera y grupo) y guarda tu referencia de pago y tu código de consulta.</p></div>
+  <div class="card" style="margin-top:12px"><h3>¿Cómo pago?</h3><p class="note">Paga $500 en banco o en caja con tu referencia, dentro de la ventana de pago. No necesitas entregar comprobante. El pago es solo para el examen de este semestre, no es transferible y no hay fecha extraordinaria.</p></div>
+  <div class="card" style="margin-top:12px"><h3>¿Cómo veo mi estatus y mi nivel?</h3><p class="note">En «Consulta tu estatus» escribe tu número de control y tu código de consulta. Solo verás tu estatus y tu nivel.</p></div>
+  <div class="card" style="margin-top:12px"><h3>Perdí mi código</h3><p class="note">Acude a la Coordinación de Lenguas Extranjeras con tu número de control.</p></div>
+  <button class="btn" data-go="registro" type="button">Ir al registro</button>
+ </div>
+</section>
+
+<section data-view="registro" hidden>
  <div class="phone">
   <div class="head">EduNex · Examen de ubicación <span class="sample">Datos simulados</span></div>
   <div id="regForm">
@@ -146,7 +176,7 @@
  <div class="tw"><table><thead><tr><th>Referencia</th><th>Concepto</th><th>Control</th><th>Nombre</th><th>Monto</th><th>Estatus de pago</th></tr></thead><tbody id="tc"></tbody></table></div>
 </section>
 </main>
-<footer class="foot"><div class="wrap">EduNex Systems · Prototipo escolar de SCC-1007 con datos simulados. Los datos se guardan solo en tu navegador. <a href="README.md" id="repoLink">Documentación</a></div></footer>
+<footer class="foot"><div class="wrap">Proyecto escolar del Tecnológico Nacional de México, Campus Matehuala (SCC-1007). Desarrollado por EduNex Systems. Datos simulados, guardados solo en tu navegador. <a href="README.md" id="repoLink">Documentación</a></div></footer>
 <div class="toast" id="toast" role="status"></div>
 <script src="core.js"></script>
 <script src="app.js"></script>
