@@ -1,6 +1,1 @@
-Pon aquí el escudo del Tecnológico Nacional de México, Campus Matehuala, con este nombre exacto:
-
-    escudo-tec-matehuala.png
-
-(PNG con fondo transparente o blanco, de unos 400 px de alto.)
-Si el archivo no está, la página muestra el texto «TecNM · Campus Matehuala» en su lugar.
+Escudo del Tecnológico Nacional de México, Campus Matehuala.
